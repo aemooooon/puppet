@@ -3,6 +3,8 @@
 
 ### Initialization
 1. First time to set up this backups repository procedures(on group21mgmt.foo.org.nz):
+my github repo address: https://github.com/aemooooon/puppet
+my github SSH  address: git@github.com:aemooooon/puppet.git
 
 ```bash
 cd /etc/puppet
