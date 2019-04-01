@@ -16,3 +16,4 @@ include ntp_service
 include mariadb
 include puppetasservice
 include ssh
+include nagios
