@@ -1,4 +1,22 @@
-# SystemAdmin
-# Hua WANG
-# 2019
-Hi, this is backup repository about SystemAdmin course 2019.
+SystemAdmin
+Puppet
+Initialization
+First time to set up this backups repository procedures(on group21mgmt.foo.org.nz):
+cd /etc/puppet
+git init
+echo "Hello, puppet" >> README.md
+git add .
+git commit -m "first time to add init file"
+git remote add origin git@github.com:aemooooon/puppet.git
+git push -u origin master
+In addition, I have add some base user information:
+
+sudo git config user.name "hua" 
+sudo git config user.email "hua@group21mgmt@foo.org.nz"
+and also put the public key of group21mgmt@foo.org.nz to my github Key Management Center.
+
+the only things it should becareful that the permisson, all command line might be need sudo and the .git/config file need change user or group to current operation user(hua).
+
+sudo chown -R hua:hua ./.git
+sudo chmod 755 config
+when any change, update in the future just need git add and push.
