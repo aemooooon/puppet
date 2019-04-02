@@ -28,4 +28,10 @@ sudo chown -R hua:hua ./.git
 sudo chmod 755 config
 ```
 
-when any change, update in the future just need git add and push.
+when any change on modules of puppet, just use command below to backup: <br>
+
+```bash
+git add .
+git commit -m "update description"
+git push
+```
