@@ -29,6 +29,7 @@ sudo chown -R hua:hua ./.git
 sudo chmod 755 config
 ```
 
+### Make update
 when any change on modules of puppet, just use command below to backup: <br>
 
 ```bash
