@@ -1,5 +1,6 @@
-# SystemAdmin
-## Puppet
+# Puppet
+This is puppet configration backup files repository from the server group21mgmt.foo.org.nz. The purpose of this repository is that when some reason in order to the server down. It will restored the puppet service up immediately.
+
 ### Initialization
 First time to set up this backups repository procedures(on group21mgmt.foo.org.nz): <br>
 
@@ -36,4 +37,4 @@ git commit -m "update description"
 git push
 ```
 
-PS: Do not update anything on github online
+PS: Do not update anything on github online, because the file permission.
