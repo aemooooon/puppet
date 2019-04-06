@@ -38,5 +38,5 @@ git commit -m "update description"
 git push
 ```
 
-PS: Do not update anything on github online.
-To see more further procedures please go to wiki pages:<a href='https://github.com/aemooooon/puppet/wiki/Puppet-Procedures' target='_blank'> Puppet-Procedures </a>
+PS:<br>Do not update anything on github online.
+<br>To see more further procedures please go to wiki pages:  <a href='https://github.com/aemooooon/puppet/wiki/Puppet-Procedures'> Puppet-Procedures </a>
