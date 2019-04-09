@@ -100,7 +100,7 @@ class nagios::config {
         service_description => 'database servers',
         hostgroup_name => 'db-servers',
         target => '/etc/nagios3/conf.d/ppt_services.cfg',
-        check_command => 'check_mysql_cmdlinecred!nagios!mypasswd',
+        check_command => 'check_mysql_cmdlinecred!nagios!abc',
         max_check_attempts => 3,
         retry_check_interval => 1,
         normal_check_interval => 5,
@@ -111,5 +111,25 @@ class nagios::config {
         contact_groups => 'admins',
         mode => 0444,
     }
+    nagios_hostgroup { 'remote-disks':
+        target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
+        alias => 'Remote Disks',
+        members => 'group21db.foo.org.nz',
+        mode => 0444,
+    }
+    nagios_service { 'diskcheck':
+        service_description => 'remote disk check',
+        hostgroup_name => 'remote-disks',
+        target => '/etc/nagios3/conf.d/ppt_services.cfg',
+        check_command => 'check_hd',
+        max_check_attempts => 3,
+        retry_check_interval => 1,
+        normal_check_interval => 5,
+        check_period => '24x7',
+        notification_interval => 30,
+        notification_period => '24x7',
+        notification_options => 'w,u,c',
+        contact_groups => 'admins',
+        mode => 0444,
+    }    
 }
-
