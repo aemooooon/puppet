@@ -13,6 +13,7 @@ node 'group21db.foo.org.nz' {
     include puppetasservice
     include ssh
     include mariadb
+    include nrpe
 }
 node 'group21app.foo.org.nz' {
     package { 'vim': ensure => present }
@@ -20,6 +21,7 @@ node 'group21app.foo.org.nz' {
     include ntp_service
     include puppetasservice
     include ssh
+    include nrpe
 }
 node 'group21backups.foo.org.nz' {
     package { 'vim': ensure => present }
@@ -27,4 +29,5 @@ node 'group21backups.foo.org.nz' {
     include ntp_service
     include puppetasservice
     include ssh
+    include nrpe
 }

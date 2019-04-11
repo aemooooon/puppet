@@ -114,14 +114,14 @@ class nagios::config {
     nagios_hostgroup { 'remote-disks':
         target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
         alias => 'Remote Disks',
-        members => 'group21db.foo.org.nz',
+        members => 'group21db.foo.org.nz, group21app.foo.org.nz, group21backups.foo.org.nz',
         mode => 0444,
     }
     nagios_service { 'diskcheck':
         service_description => 'remote disk check',
         hostgroup_name => 'remote-disks',
         target => '/etc/nagios3/conf.d/ppt_services.cfg',
-        check_command => 'check_hd',
+        check_command => 'check_nrpe_1arg!check_sda1',
         max_check_attempts => 3,
         retry_check_interval => 1,
         normal_check_interval => 5,
