@@ -131,5 +131,35 @@ class nagios::config {
         notification_options => 'w,u,c',
         contact_groups => 'admins',
         mode => 0444,
-    }    
+    }
+    nagios_contact { 'wangh21':
+        target => '/etc/nagios3/conf.d/ppt_contacts.cfg',
+        alias => 'Hua Wang',
+        service_notification_period => '24x7',
+        host_notification_period => '24x7',
+        service_notification_options => 'w,u,c,r',
+        host_notification_options => 'd,r',
+        service_notification_commands => 'notify-service-by-slack',
+        host_notification_commands => 'notify-host-by-slack',
+        email => 'root@localhost',
+	mode => 0444,
+    }
+    nagios_contact { 'kiselv1':
+        target => '/etc/nagios3/conf.d/ppt_contacts.cfg',
+        alias => 'Kiselv',
+        service_notification_period => '24x7',
+        host_notification_period => '24x7',
+        service_notification_options => 'w,u,c,r',
+        host_notification_options => 'd,r',
+        service_notification_commands => 'notify-service-by-slack',
+        host_notification_commands => 'notify-host-by-slack',
+        email => 'root@localhost',
+	mode => 0444,
+    }
+    nagios_contactgroup { 'sysadmins':
+        target => '/etc/nagios3/conf.d/ppt_contactgroups.cfg',
+        alias => 'Nagios Administrators',
+        members => 'wangh21, kiselv1',
+	mode => 0444,
+    }
 }
