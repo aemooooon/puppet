@@ -8,8 +8,7 @@ class bacula_director::config {
         require => Class["bacula_director::install"],
         notify => Class["bacula_director::service"],
     }
-}
-class bacula_director::config {
+
     file { "/etc/bacula/bconsole.conf":
         ensure => present,
         source => "puppet:///modules/bacula_director/bconsole.conf",

@@ -19,16 +19,16 @@ Director {                            # define myself
   WorkingDirectory = "/var/lib/bacula"
   PidDirectory = "/var/run/bacula"
   Maximum Concurrent Jobs = 20
-  Password = "abc"         # Console password
+  Password = "QBimT0wJnuPq9_PS2ouVuZ6IhQKLJkog-"         # Console password
   Messages = Daemon
-  DirAddress = 10.25.137.152
+  DirAddress = 127.0.0.1
 }
 
 JobDefs {
   Name = "DefaultJob"
   Type = Backup
   Level = Incremental
-  Client = group21mgmt-fd
+  Client = group21backups-fd
   FileSet = "Full Set"
   Schedule = "WeeklyCycle"
   Storage = File1
@@ -54,12 +54,11 @@ Job {
 #  JobDefs = "DefaultJob"
 #}
 
-Job {
-  Name = "Backupgroup21mgmt"
-  Type = Backup
+#Job {
+#  Name = "BackupClient1-to-Tape"
   Level = Incremental
-  Client = group21mgmt-fd
-  FileSet = "group21fileset"
+  Client = group21backups-fd
+  FileSet = "Full Set"
   Schedule = "WeeklyCycle"
   Storage = File1
   Messages = Standard
@@ -74,7 +73,7 @@ Job {
 # Define the main nightly save backup job
 #   By default, this job will back up to disk in /nonexistant/path/to/file/archive/dir
 Job {
-  Name = "BackupClient1ab"
+  Name = "BackupClient1"
   JobDefs = "DefaultJob"
 }
 
@@ -118,7 +117,7 @@ Job {
 Job {
   Name = "RestoreFiles"
   Type = Restore
-  Client=group21mgmt-fd
+  Client=group21backups-fd
   FileSet="Full Set"
   Storage = File1
   Pool = File
@@ -183,22 +182,6 @@ Schedule {
   Run = Full sun-sat at 23:10
 }
 
-# Group21 FileSET
-FileSet {
-  Name = "group21fileset"
-  Include {
-    Options {
-      signature = MD5
-      Exclude = yes
-    }
-  File= /etc
-  File= /home
-}
- Exclude {
-   File = *.swp
- }
-}
-
 # This is the backup of the catalog
 FileSet {
   Name = "Catalog"
@@ -212,11 +195,11 @@ FileSet {
 
 # Client (File Services) to backup
 Client {
-  Name = group21mgmt-fd
-  Address = 10.25.137.155
+  Name = group21backups-fd
+  Address = localhost
   FDPort = 9102
   Catalog = MyCatalog
-  Password = "abc"          # password for FileDaemon
+  Password = "5LCH6F6hgZKobt4v1qHgLgCreGcXebGqp"          # password for FileDaemon
   File Retention = 60 days            # 60 days
   Job Retention = 6 months            # six months
   AutoPrune = yes                     # Prune expired Jobs/Files
@@ -242,9 +225,9 @@ Client {
 Storage {
   Name = File1
 # Do not use "localhost" here
-  Address = 10.25.137.152                # N.B. Use a fully qualified name here
+  Address = localhost                # N.B. Use a fully qualified name here
   SDPort = 9103
-  Password = "abc"
+  Password = "myqX1JM4XEXauB_yMEcimok97b5731tcx"
   Device = FileChgr1
   Media Type = File1
   Maximum Concurrent Jobs = 10        # run up to 10 jobs a the same time

@@ -132,6 +132,27 @@ class nagios::config {
         contact_groups => 'admins',
         mode => 0444,
     }
+   nagios_hostgroup { 'remote-http':
+        target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
+        alias => 'Remote HTTP',
+        members => 'group21app.foo.org.nz',
+        mode => 0444,
+    } 
+    nagios_service { 'httpcheck':
+        service_description => 'remote http check',
+        hostgroup_name => 'remote-http',
+        target => '/etc/nagios3/conf.d/ppt_services.cfg',
+        check_command => 'check_http',
+        max_check_attempts => 3,
+        retry_check_interval => 1,
+        normal_check_interval => 5,
+        check_period => '24x7',
+        notification_interval => 30,
+        notification_period => '24x7',
+        notification_options => 'w,u,c',
+        contact_groups => 'admins',
+        mode => 0444,
+    }
     nagios_contact { 'wangh21':
         target => '/etc/nagios3/conf.d/ppt_contacts.cfg',
         alias => 'Hua Wang',
