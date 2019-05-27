@@ -21,6 +21,12 @@ class ssh::config {
                 key => "AAAAB3NzaC1yc2EAAAADAQABAAABAQDPHEVa2Ym7G6sXcDkm7IzXi4oWch/kPTKersDIxuSJd8SqcycoQHZNKkx5nVEWGKi5HZL3GKzISVmOxJ7CQ1ELdqQNLI1H5UxUcDKXsywt2CZZHLwZiB/7wJESwhZkVEUpOnRgyt3RTdYaK5/WWv31Cw+Ir0S5JZKSSUlY1JB6l/peF7j6HGLj3Q9mxih4qDCWmH+CDivsU8JWBkyYTIE7Nd8qfpHybnqqCUYZty9B+dNGvPWXjF/vvB/uuEHzo6NL0zGlmGW/ADiBlD2JKivBCt2EinW7tN9FZoH7I+g7f7qDB87vLq6PqJps4E4SjbpPX1WaPmVKbR42QBiX6VLL",
         }
 
+        ssh_authorized_key { "wangh21@mariadb.ict.op.ac.nz":
+                user => "hua",
+                type => "ssh-rsa",
+                key => "AAAAB3NzaC1yc2EAAAADAQABAAABAQC5OoCMr9j+OOaWup+7dSrQ0a7C2BJNl0UORonR+o7i13l4Ws3kgVJbHNOWXfqReAYf+dYODOdNkPvIPNLcWqZdYTrt61BywmV0PMQ79zlWwkmvAPyipxqKoW2TqNL8zsHQb3CRQKCOaKq5tPd742rnEuWg8jLOGC5TRpR8jMY0Fjrg7l+nIlnziBHtgDZNktHI44XNkUWmhrvsWArzuHtByRTC8b7vx74vr6qF/zErUg07ZTiCGC5LqNqNTr1HhaGOnkFvPKN3vXmP8BIidERBtcWLGbmjzPFjRtZyYZ/eVp71M4YDUQ41LaoFea4VoYkKeNLizXzJ1YQeZY8K4+Qv",
+        }
+
 ssh_authorized_key {"armad@DESKTOP-26IGNE9":
 	user=>"adamv",
 	type => "ssh-rsa",
