@@ -6,7 +6,6 @@ node 'group21mgmt.foo.org.nz' {
     include puppetasservice
     include ssh
     include bacula_file
-    include dns_update
 }
 node 'group21db.foo.org.nz' {
     package { 'vim': ensure => present }
@@ -17,7 +16,6 @@ node 'group21db.foo.org.nz' {
     include mariadb
     include nrpe
     include bacula_file
-    include dns_update
 }
 node 'group21app.foo.org.nz' {
     package { 'vim': ensure => present }
@@ -27,7 +25,6 @@ node 'group21app.foo.org.nz' {
     include ssh
     include nrpe
     include bacula_file
-    inlcude dns_update
 }
 node 'group21backups.foo.org.nz' {
     package { 'vim': ensure => present }
@@ -39,5 +36,4 @@ node 'group21backups.foo.org.nz' {
     include bacula_director
     include bacula_storage
     include bacula_file
-    include dns_update
 }

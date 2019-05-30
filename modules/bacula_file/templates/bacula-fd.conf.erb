@@ -29,7 +29,7 @@ Director {
 # "Global" File daemon configuration specifications
 #
 FileDaemon {                          # this is me
-  Name = <%= @hostname %>
+  Name =  <%= @hostname %>-fd
   FDport = 9102                  # where we listen for the director
   WorkingDirectory = /var/lib/bacula
   Pid Directory = /var/run/bacula
