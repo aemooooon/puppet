@@ -111,6 +111,27 @@ class nagios::config {
         contact_groups => 'admins',
         mode => 0444,
     }
+    nagios_hostgroup { 'file-check':
+        target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
+        alias => 'file check',
+        members => 'group21db.foo.org.nz, group21app.foo.org.nz, group21backups.foo.org.nz, group21mgmt.foo.org.nz',
+        mode => 0444,
+    }
+    nagios_service { 'file_check':
+        service_description => 'file check',
+        hostgroup_name => 'file-check',
+        target => '/etc/nagios3/conf.d/ppt_services.cfg',
+        check_command => 'check_filechange!/var/log/inotify/inotify.log!/etc/',
+        max_check_attempts => 3,
+        retry_check_interval => 1,
+        normal_check_interval => 5,
+        check_period => '24x7',
+        notification_interval => 30,
+        notification_period => '24x7',
+        notification_options => 'w,u,c',
+        contact_groups => 'admins',
+        mode => 0444,
+    }
     nagios_hostgroup { 'remote-disks':
         target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
         alias => 'Remote Disks',
