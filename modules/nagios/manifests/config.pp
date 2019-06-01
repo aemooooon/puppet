@@ -121,7 +121,7 @@ class nagios::config {
         service_description => 'file check',
         hostgroup_name => 'file-check',
         target => '/etc/nagios3/conf.d/ppt_services.cfg',
-        check_command => 'check_filechange!/var/log/inotify/inotify.log!/etc/',
+        check_command => 'check_filechange!/var/log/inotify/inotify.log!/etc/,/home/',
         max_check_attempts => 3,
         retry_check_interval => 1,
         normal_check_interval => 5,
