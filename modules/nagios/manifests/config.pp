@@ -91,16 +91,16 @@ class nagios::config {
 		contact_groups => 'sysadmins',
 		notify  => Class["nagios::service"],
 	}
-	nagios_hostgroup {'remote-processors':	
+	nagios_hostgroup {'check-load':	
 		target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
-		alias => 'Remote Processors',
+		alias => 'check load',
 		members => 'group21db.foo.org.nz, group21app.foo.org.nz,group21backups.foo.org.nz',
 		notify => Class["nagios::service"],
 	}
 
-	nagios_service {'remote-processor-service':
-		service_description => 'Processor Loading',
-		hostgroup_name => 'remote-processors',
+	nagios_service {'current-load-service':
+		service_description => 'Current Load',
+		hostgroup_name => 'check-load',
 		target => '/etc/nagios3/conf.d/ppt_services.cfg',
 		check_command => 'check_nrpe_1arg!check_load',
 		max_check_attempts => 3,
@@ -113,6 +113,72 @@ class nagios::config {
 		contact_groups => 'sysadmins',
 		notify  => Class["nagios::service"],
 	}
+        nagios_hostgroup {'check-users':
+                target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
+                alias => 'check users',
+                members => 'group21db.foo.org.nz, group21app.foo.org.nz,group21backups.foo.org.nz',
+                notify => Class["nagios::service"],
+        }
+
+        nagios_service {'current-users-service':
+                service_description => 'Current Users',
+                hostgroup_name => 'check-users',
+                target => '/etc/nagios3/conf.d/ppt_services.cfg',
+                check_command => 'check_nrpe_1arg!check_users',
+                max_check_attempts => 3,
+                retry_check_interval => 1,
+                normal_check_interval => 5,
+                check_period => '24x7',
+                notification_interval => 30,
+                notification_period => '24x7',
+                notification_options => 'w,u,c',
+                contact_groups => 'sysadmins',
+                notify  => Class["nagios::service"],
+        }
+        nagios_hostgroup {'check-total-procs':
+                target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
+                alias => 'check total procs',
+                members => 'group21db.foo.org.nz, group21app.foo.org.nz,group21backups.foo.org.nz',
+                notify => Class["nagios::service"],
+        }
+
+        nagios_service {'current-total-procs-service':
+                service_description => 'Total Processes',
+                hostgroup_name => 'check-total-procs',
+                target => '/etc/nagios3/conf.d/ppt_services.cfg',
+                check_command => 'check_nrpe_1arg!check_total_procs',
+                max_check_attempts => 3,
+                retry_check_interval => 1,
+                normal_check_interval => 5,
+                check_period => '24x7',
+                notification_interval => 30,
+                notification_period => '24x7',
+                notification_options => 'w,u,c',
+                contact_groups => 'sysadmins',
+                notify  => Class["nagios::service"],
+        }
+        nagios_hostgroup {'check-zombie-procs':
+                target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
+                alias => 'check zombie procs',
+                members => 'group21db.foo.org.nz, group21app.foo.org.nz,group21backups.foo.org.nz',
+                notify => Class["nagios::service"],
+        }
+
+        nagios_service {'current-zombie-procs-service':
+                service_description => 'Zombie Processes',
+                hostgroup_name => 'check-zombie-procs',
+                target => '/etc/nagios3/conf.d/ppt_services.cfg',
+                check_command => 'check_nrpe_1arg!check_zombie_procs',
+                max_check_attempts => 3,
+                retry_check_interval => 1,
+                normal_check_interval => 5,
+                check_period => '24x7',
+                notification_interval => 30,
+                notification_period => '24x7',
+                notification_options => 'w,u,c',
+                contact_groups => 'sysadmins',
+                notify  => Class["nagios::service"],
+        }
     nagios_hostgroup { 'ssh-servers':
         target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
         alias => 'ssh Servers',
