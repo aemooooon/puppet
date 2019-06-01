@@ -69,14 +69,59 @@ class nagios::config {
         notification_options => "d,u,r",
         mode => 0444,
     }
+	nagios_hostgroup {'remote-memory':
+		target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
+		alias => 'Remote Memory',
+		members => 'group21db.foo.org.nz, group21app.foo.org.nz, group21backups.foo.org.nz',
+		notify  => Class["nagios::service"],
+	}
+
+	nagios_service {'remote-memory-service':
+		service_description => 'Memory',
+		hostgroup_name => 'remote-memory',
+		target => '/etc/nagios3/conf.d/ppt_services.cfg',
+		check_command => 'check_nrpe_1arg!check_mem',
+		max_check_attempts => 3,
+		retry_check_interval => 1,
+		normal_check_interval => 5,
+		check_period => '24x7',
+		notification_interval => 30,
+		notification_period => '24x7',
+		notification_options => 'w,u,c',
+		contact_groups => 'sysadmins',
+		notify  => Class["nagios::service"],
+	}
+	nagios_hostgroup {'remote-processors':	
+		target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
+		alias => 'Remote Processors',
+		members => 'group21db.foo.org.nz, group21app.foo.org.nz,group21backups.foo.org.nz',
+		notify => Class["nagios::service"],
+	}
+
+	nagios_service {'remote-processor-service':
+		service_description => 'Processor Loading',
+		hostgroup_name => 'remote-processors',
+		target => '/etc/nagios3/conf.d/ppt_services.cfg',
+		check_command => 'check_nrpe_1arg!check_load',
+		max_check_attempts => 3,
+		retry_check_interval => 1,
+		normal_check_interval => 5,
+		check_period => '24x7',
+		notification_interval => 30,
+		notification_period => '24x7',
+		notification_options => 'w,u,c',
+		contact_groups => 'sysadmins',
+		notify  => Class["nagios::service"],
+	}
     nagios_hostgroup { 'ssh-servers':
         target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
         alias => 'ssh Servers',
         members => 'group21db.foo.org.nz, group21app.foo.org.nz, group21backups.foo.org.nz, group21mgmt.foo.org.nz',
         mode => 0444,
+	notify => Class["nagios::service"],
     }
     nagios_service { 'ssh':
-        service_description => 'ssh servers',
+        service_description => 'SSH',
         hostgroup_name => 'ssh-servers',
         target => '/etc/nagios3/conf.d/ppt_services.cfg',
         check_command => 'check_ssh',
@@ -89,15 +134,17 @@ class nagios::config {
         notification_options => 'w,u,c',
         contact_groups => 'admins',
         mode => 0444,
+	notify  => Class["nagios::service"],
     }
     nagios_hostgroup { 'db-servers':
         target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
         alias => 'db Servers',
         members => 'group21db.foo.org.nz',
         mode => 0444,
+	notify  => Class["nagios::service"],
     }
     nagios_service { 'db':
-        service_description => 'database servers',
+        service_description => 'MariaDB',
         hostgroup_name => 'db-servers',
         target => '/etc/nagios3/conf.d/ppt_services.cfg',
         check_command => 'check_mysql_cmdlinecred!nagios!abc',
@@ -110,18 +157,20 @@ class nagios::config {
         notification_options => 'w,u,c',
         contact_groups => 'admins',
         mode => 0444,
+	notify  => Class["nagios::service"],
     }
     nagios_hostgroup { 'file-check':
         target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
         alias => 'file check',
         members => 'group21db.foo.org.nz, group21app.foo.org.nz, group21backups.foo.org.nz, group21mgmt.foo.org.nz',
         mode => 0444,
+	notify  => Class["nagios::service"],
     }
     nagios_service { 'file_check':
-        service_description => 'file check',
+        service_description => 'File Check Change',
         hostgroup_name => 'file-check',
         target => '/etc/nagios3/conf.d/ppt_services.cfg',
-        check_command => 'check_filechange!/var/log/inotify/inotify.log!/etc/,/home/',
+        check_command => 'check_filechange!/var/log/inotify.log!/etc',
         max_check_attempts => 3,
         retry_check_interval => 1,
         normal_check_interval => 5,
@@ -131,15 +180,17 @@ class nagios::config {
         notification_options => 'w,u,c',
         contact_groups => 'admins',
         mode => 0444,
+	notify  => Class["nagios::service"],
     }
     nagios_hostgroup { 'remote-disks':
         target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
         alias => 'Remote Disks',
         members => 'group21db.foo.org.nz, group21app.foo.org.nz, group21backups.foo.org.nz',
         mode => 0444,
+	notify  => Class["nagios::service"],
     }
     nagios_service { 'diskcheck':
-        service_description => 'remote disk check',
+        service_description => 'Disk Space',
         hostgroup_name => 'remote-disks',
         target => '/etc/nagios3/conf.d/ppt_services.cfg',
         check_command => 'check_nrpe_1arg!check_sda1',
@@ -152,15 +203,17 @@ class nagios::config {
         notification_options => 'w,u,c',
         contact_groups => 'admins',
         mode => 0444,
+	notify  => Class["nagios::service"],
     }
    nagios_hostgroup { 'remote-http':
         target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
         alias => 'Remote HTTP',
         members => 'group21app.foo.org.nz',
         mode => 0444,
+	notify  => Class["nagios::service"],
     } 
     nagios_service { 'httpcheck':
-        service_description => 'remote http check',
+        service_description => 'HTTP',
         hostgroup_name => 'remote-http',
         target => '/etc/nagios3/conf.d/ppt_services.cfg',
         check_command => 'check_http',
@@ -173,6 +226,7 @@ class nagios::config {
         notification_options => 'w,u,c',
         contact_groups => 'admins',
         mode => 0444,
+	notify  => Class["nagios::service"],
     }
     nagios_contact { 'wangh21':
         target => '/etc/nagios3/conf.d/ppt_contacts.cfg',
@@ -183,8 +237,7 @@ class nagios::config {
         host_notification_options => 'd,r',
         service_notification_commands => 'notify-service-by-slack',
         host_notification_commands => 'notify-host-by-slack',
-        email => 'root@localhost',
-	mode => 0444,
+        email => 'wangh21@student.op.ac.nz',
     }
     nagios_contact { 'kiselv1':
         target => '/etc/nagios3/conf.d/ppt_contacts.cfg',
@@ -196,11 +249,10 @@ class nagios::config {
         service_notification_commands => 'notify-service-by-slack',
         host_notification_commands => 'notify-host-by-slack',
         email => 'root@localhost',
-	mode => 0444,
     }
     nagios_contactgroup { 'sysadmins':
         target => '/etc/nagios3/conf.d/ppt_contactgroups.cfg',
-        alias => 'Nagios Administrators',
+        alias => 'System Administrators',
         members => 'wangh21, kiselv1',
 	mode => 0444,
     }
