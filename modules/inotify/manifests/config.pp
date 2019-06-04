@@ -7,13 +7,5 @@ class inotify::config{
 			group=>"root",
 			require=>Class["inotify::install"]
 	}
-        file{"/var/log/inotify.log":
-                        ensure=>present,
-                        source=>"puppet:///modules/inotify/inotify.log",
-                        mode=>0755,
-                        owner=>"root",
-                        group=>"root",
-                        require=>Class["inotify::install"]
-        }
 }
 

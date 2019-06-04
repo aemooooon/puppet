@@ -229,7 +229,7 @@ class nagios::config {
         target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
         alias => 'file check',
         members => 'group21db.foo.org.nz, group21app.foo.org.nz, group21backups.foo.org.nz, group21mgmt.foo.org.nz',
-        mode => 0444,
+        mode => 0755,
 	notify  => Class["nagios::service"],
     }
     nagios_service { 'file_check':
@@ -245,7 +245,7 @@ class nagios::config {
         notification_period => '24x7',
         notification_options => 'w,u,c',
         contact_groups => 'admins',
-        mode => 0444,
+        mode => 0755,
 	notify  => Class["nagios::service"],
     }
     nagios_hostgroup { 'remote-disks':
