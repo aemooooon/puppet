@@ -36,6 +36,17 @@ class nagios::config {
         notification_options => "d,u,r",
         mode => 0444,
     }
+    nagios_host { "group21app2.foo.org.nz":
+        target => "/etc/nagios3/conf.d/ppt_hosts.cfg",
+        alias => "app2",
+        check_period => "24x7",
+        max_check_attempts => 3,
+        check_command => "check-host-alive",
+        notification_interval => 30,
+        notification_period => "24x7",
+        notification_options => "d,u,r",
+        mode => 0444,
+    }
     nagios_host { "group21app.foo.org.nz":
         target => "/etc/nagios3/conf.d/ppt_hosts.cfg",
         alias => "app",
@@ -72,7 +83,7 @@ class nagios::config {
 	nagios_hostgroup {'remote-memory':
 		target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
 		alias => 'Remote Memory',
-		members => 'group21db.foo.org.nz, group21app.foo.org.nz, group21backups.foo.org.nz',
+		members => 'group21db.foo.org.nz, group21app.foo.org.nz, group21app2.foo.org.nz, group21backups.foo.org.nz',
 		notify  => Class["nagios::service"],
 	}
 
@@ -94,7 +105,7 @@ class nagios::config {
 	nagios_hostgroup {'check-load':	
 		target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
 		alias => 'check load',
-		members => 'group21db.foo.org.nz, group21app.foo.org.nz,group21backups.foo.org.nz',
+		members => 'group21db.foo.org.nz, group21app.foo.org.nz,group21backups.foo.org.nz, group21app2.foo.org.nz',
 		notify => Class["nagios::service"],
 	}
 
@@ -116,7 +127,7 @@ class nagios::config {
         nagios_hostgroup {'check-users':
                 target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
                 alias => 'check users',
-                members => 'group21db.foo.org.nz, group21app.foo.org.nz,group21backups.foo.org.nz',
+                members => 'group21db.foo.org.nz, group21app.foo.org.nz,group21backups.foo.org.nz, group21app2.foo.org.nz',
                 notify => Class["nagios::service"],
         }
 
@@ -138,7 +149,7 @@ class nagios::config {
         nagios_hostgroup {'check-total-procs':
                 target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
                 alias => 'check total procs',
-                members => 'group21db.foo.org.nz, group21app.foo.org.nz,group21backups.foo.org.nz',
+                members => 'group21db.foo.org.nz, group21app.foo.org.nz,group21backups.foo.org.nz, group21app2.foo.org.nz',
                 notify => Class["nagios::service"],
         }
 
@@ -160,7 +171,7 @@ class nagios::config {
         nagios_hostgroup {'check-zombie-procs':
                 target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
                 alias => 'check zombie procs',
-                members => 'group21db.foo.org.nz, group21app.foo.org.nz,group21backups.foo.org.nz',
+                members => 'group21db.foo.org.nz, group21app.foo.org.nz,group21backups.foo.org.nz, group21app2.foo.org.nz',
                 notify => Class["nagios::service"],
         }
 
@@ -182,7 +193,7 @@ class nagios::config {
     nagios_hostgroup { 'ssh-servers':
         target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
         alias => 'ssh Servers',
-        members => 'group21db.foo.org.nz, group21app.foo.org.nz, group21backups.foo.org.nz, group21mgmt.foo.org.nz',
+        members => 'group21db.foo.org.nz, group21app.foo.org.nz, group21backups.foo.org.nz, group21mgmt.foo.org.nz, group21app2.foo.org.nz',
         mode => 0444,
 	notify => Class["nagios::service"],
     }
@@ -228,7 +239,7 @@ class nagios::config {
     nagios_hostgroup { 'file-check':
         target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
         alias => 'file check',
-        members => 'group21db.foo.org.nz, group21app.foo.org.nz, group21backups.foo.org.nz, group21mgmt.foo.org.nz',
+        members => 'group21db.foo.org.nz, group21app.foo.org.nz, group21app2.foo.org.nz, group21backups.foo.org.nz, group21mgmt.foo.org.nz',
         mode => 0755,
 	notify  => Class["nagios::service"],
     }
@@ -251,7 +262,7 @@ class nagios::config {
     nagios_hostgroup { 'remote-disks':
         target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
         alias => 'Remote Disks',
-        members => 'group21db.foo.org.nz, group21app.foo.org.nz, group21backups.foo.org.nz',
+        members => 'group21db.foo.org.nz, group21app.foo.org.nz, group21backups.foo.org.nz, group21app2.foo.org.nz',
         mode => 0444,
 	notify  => Class["nagios::service"],
     }
@@ -293,6 +304,29 @@ class nagios::config {
         contact_groups => 'admins',
         mode => 0444,
 	notify  => Class["nagios::service"],
+    }
+   nagios_hostgroup { 'remote-http2':
+        target => '/etc/nagios3/conf.d/ppt_hostgroups.cfg',
+        alias => 'Remote HTTP2',
+        members => 'group21app2.foo.org.nz',
+        mode => 0444,
+        notify  => Class["nagios::service"],
+    }
+    nagios_service { 'httpcheck2':
+        service_description => 'HTTP',
+        hostgroup_name => 'remote-http2',
+        target => '/etc/nagios3/conf.d/ppt_services.cfg',
+        check_command => 'check_http',
+        max_check_attempts => 3,
+        retry_check_interval => 1,
+        normal_check_interval => 5,
+        check_period => '24x7',
+        notification_interval => 30,
+        notification_period => '24x7',
+        notification_options => 'w,u,c',
+        contact_groups => 'admins',
+        mode => 0444,
+        notify  => Class["nagios::service"],
     }
     nagios_contact { 'wangh21':
         target => '/etc/nagios3/conf.d/ppt_contacts.cfg',
