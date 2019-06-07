@@ -7,6 +7,7 @@ node 'group21mgmt.foo.org.nz' {
     include ssh
     include bacula_file
     include inotify
+    include nrpe
 }
 node 'group21db.foo.org.nz' {
     package { 'vim': ensure => present }

@@ -7,5 +7,12 @@ class inotify::config{
 			group=>"root",
 			require=>Class["inotify::install"]
 	}
+	file { "/var/log/inotify.log":
+		ensure => present,
+		mode => 0644,
+		owner => "root",
+		group => "root",
+	}
+
 }
 
